@@ -36,7 +36,7 @@ timezone: # see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones for
 author:
   type      : # "person" (default), "organization"
   name      : altman
-  url       :
+  url       : http://ww1.sinaimg.cn/large/9ff47d03ly1g8icunthzkj20oc0o47gv.jpg
   avatar    : # path or url of avatar image (square)
   bio       : I am an amazing person.
   email     : 13331167937@163.com
