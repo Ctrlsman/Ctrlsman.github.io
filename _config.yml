@@ -37,7 +37,7 @@ author:
   type      : # "person" (default), "organization"
   name      : altman
   url       : http://ww1.sinaimg.cn/large/9ff47d03ly1g8icunthzkj20oc0o47gv.jpg
-  avatar    : https://tva1.sinaimg.cn/large/006tNbRwly1ga10rwsubuj30ny0mkgy2.jpg) # path or url of avatar image (square)
+  avatar    : https://tva1.sinaimg.cn/large/006tNbRwly1ga10rwsubuj30ny0mkgy2.jpg # path or url of avatar image (square)
   bio       : I am an amazing person.
   email     : 13331167937@163.com
   facebook  : # "user_name" the last part of your profile url, e.g. https://www.facebook.com/user_name
