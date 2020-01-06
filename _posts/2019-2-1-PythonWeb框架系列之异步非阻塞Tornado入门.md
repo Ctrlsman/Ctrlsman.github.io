@@ -4,7 +4,7 @@ title: <Python Web框架系列>之异步非阻塞Tornado入门
 
 ## 简介
 
-Tornado是一个Python web框架和异步网络库，最初是在FriendFeed开发的。通过使用非阻塞网络I/O, Tornado可以扩展到数以万计的开放连接，这使它成为长轮询、WebSockets和其他需要与每个用户进行长时间连接的应用程序的理想选择。   -----翻译自tornado官网
+Tornado是一个Python web框架和异步网络库，最初是在FriendFeed开发的。通过使用非阻塞网络I/O, Tornado可以扩展到数以万计的开放连接，这使它成为长轮询、WebSockets和其他需要与每个用户进行长时间连接的应用程序的理想选择。   ----翻译自tornado官网
 
 
 Tornado和现在的主流Web服务器框架（包括大多数 Python 的框架）有着明显的区别：它是非阻塞式服务器，而且速度相当快。得利于其 非阻塞的方式和对 epoll 的运用，Tornado 每秒可以处理数以千计的连接，这意味着对于实时 Web 服务来说，Tornado 是一个理想的 Web 框架。
