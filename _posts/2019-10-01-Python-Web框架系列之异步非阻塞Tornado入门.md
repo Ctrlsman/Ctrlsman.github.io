@@ -1,5 +1,5 @@
 ---
-title: <Python Web框架系列>之异步非阻塞Tornado入门
+title: Python Web框架系列之异步非阻塞Tornado入门
 ---
 
 ## 简介
