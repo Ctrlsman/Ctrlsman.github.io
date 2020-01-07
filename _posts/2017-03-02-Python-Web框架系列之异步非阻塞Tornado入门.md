@@ -113,9 +113,9 @@ if __name__ == "__main__":
 
 Tornao中的模板语言和django中类似，模板引擎将模板文件载入内存，然后将数据嵌入其中，最终获取到一个完整的字符串，再将字符串返回给请求者。
 
-Tornado 的模板支持“控制语句”和“表达语句”，控制语句是使用 {% 和 %} 包起来的 例如 {% if len(items) > 2 %}。表达语句是使用 {{ 和 }} 包起来的，例如 {{ items[0] }}。
+Tornado 的模板支持“控制语句”和“表达语句”，控制语句是使用 { % 和 % } 包起来的 例如 { % if len(items) > 2 % }。表达语句是使用 { { 和 } } 包起来的，例如 { { items[0] } }。
 
-控制语句和对应的 Python 语句的格式基本完全相同。我们支持 if、for、while 和 try，这些语句逻辑结束的位置需要用 {% end %} 做标记。还通过 extends 和 block 语句实现了模板继承。这些在 template 模块 的代码文档中有着详细的描述。
+控制语句和对应的 Python 语句的格式基本完全相同。我们支持 if、for、while 和 try，这些语句逻辑结束的位置需要用 { % end % } 做标记。还通过 extends 和 block 语句实现了模板继承。这些在 template 模块 的代码文档中有着详细的描述。
 
 **注：在使用模板前需要在setting中设置模板路径："template_path" : "tpl"**
 
@@ -124,9 +124,9 @@ Tornado 的模板支持“控制语句”和“表达语句”，控制语句是
 <!DOCTYPE html>
     <div>
         <ul>
-            {% for item in list_info %}
-                <li>{{item}}</li>
-            {% end %}
+            { % for item in list_info % }
+                <li>{ {item} }</li>
+            { % end % }
         </ul>
     </div>
 ```
@@ -153,35 +153,36 @@ Tornado 的模板支持“控制语句”和“表达语句”，控制语句是
 ```html
 
 <!--母版定义-->
-{% extends 'layout.html'%}
-{% block CSS %}
-    <link href="{{static_url("css/index.css")}}" rel="stylesheet" />
-{% end %}
+{ % extends 'layout.html'% }
+{ % block CSS % }
+    <link href="{ {static_url("css/index.css")} }" rel="stylesheet" />
+{ % end % }
 
-{% block RenderBody %}
+{ % block RenderBody % }
     <h1>Index</h1>
 
     <ul>
-    {%  for item in li %}
-        <li>{{item}}</li>
-    {% end %}
+    { %  for item in li % }
+        <li>{ {item} }</li>
+    { % end % }
     </ul>
 
-{% end %}
+{ % end % }
 
-{% block JavaScript %}
+{ % block JavaScript % }
     
-{% end %}
+{ % end % }
 
 
 <!--导入母版-->
-{% include 'header.html' %}
+{ % include 'header.html' % }
 
 ```
 
 ### UIMethod和UIModule
 
-1. 定义
++ 定义
+
 ```python
 # uimethods.py
 def tab(self):
@@ -198,7 +199,7 @@ class custom(UIModule):
         return escape.xhtml_escape('<h1>Hello!</h1>')
 ```
 
-2. 注册
++ 注册
 
 ```python
 import tornado.ioloop
@@ -229,19 +230,20 @@ if __name__ == "__main__":
     tornado.ioloop.IOLoop.instance().start()
 ```
 
-3. 使用
++ 使用
+
 ```html
 <!DOCTYPE html>
 <html>
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-    <link href="{{static_url("commons.css")}}" rel="stylesheet" />
+    <link href="{ {static_url("commons.css")} }" rel="stylesheet" />
 </head>
 <body>
     <h1>hello</h1>
-    {% module custom(123) %}
-    {{ tab() }}
+    { % module custom(123) % }
+    { { tab() } }
 </body>
 ```
 
@@ -263,13 +265,14 @@ settings = {
 ```html
 <html>
    <head>
-      <title>FriendFeed - {{ _("Home") }}</title>
+      <title>FriendFeed - { { _("Home") } }</title>
    </head>
    <body>
-     <div><img src="{{ static_url("images/logo.png") }}"/></div>
+     <div><img src="{ { static_url("images/logo.png") } }"/></div>
    </body>
  </html> 
  ```
+
  static_url() 函数会将相对地址转成一个类似于 /static/images/logo.png?v=aae54 的 URI，v 参数是 logo.png 文件的散列值， Tornado 服务器会把它发给浏览器，并以此为依据让浏览器对相关内容做永久缓存。
 
 由于 v 的值是基于文件的内容计算出来的，如果你更新了文件，或者重启了服务器 ，那么就会得到一个新的 v 值，这样浏览器就会请求服务器以获取新的文件内容。 如果文件的内容没有改变，浏览器就会一直使用本地缓存的文件，这样可以显著提高页 面的渲染速度。
@@ -321,7 +324,7 @@ application = tornado.web.Application([
 ## CSRF
 Tornado中的夸张请求伪造和Django中的相似
 
-1. 配置
++ 配置
 ```python
 settings = {
     "xsrf_cookies": True,
@@ -332,16 +335,18 @@ application = tornado.web.Application([
 ], **settings)
 ```
 
-2. 基本使用
++ 基本使用
+
 ```html
 <form action="/new_message" method="post">
-  {{ xsrf_form_html() }}
+  { { xsrf_form_html() } }
   <input type="text" name="message"/>
   <input type="submit" value="Post"/>
 </form>
 ```
 
-3. Ajax使用
++ Ajax使用
+
 ```html
 function getCookie(name) {
     var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
@@ -353,7 +358,7 @@ jQuery.postJSON = function(url, args, callback) {
     $.ajax({url: url, data: $.param(args), dataType: "text", type: "POST",
         success: function(response) {
         callback(eval("(" + response + ")"));
-    }});
+    } });
 };
 ```
 
